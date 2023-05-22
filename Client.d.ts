@@ -163,6 +163,8 @@ declare class Client extends EventEmitter {
     ): boolean;
 }
 
+export default Client;
+
 declare interface IncomingMPPEvents {
     a: (msg: { m: "a"; a: string; p: Participant; t: number }) => void;
     b: (msg: { m: "b"; code: string }) => void;
