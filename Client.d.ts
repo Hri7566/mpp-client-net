@@ -69,6 +69,29 @@ declare type CustomTarget = {
       }
 );
 
+declare interface Crown {
+    userId: string;
+    partcipantId?: string;
+    time: number;
+    startPos: {
+        x: number;
+        y: number;
+    };
+    endPos: {
+        x: number;
+        y: number;
+    };
+}
+
+declare interface ChannelInfo {
+    banned?: boolean;
+    count: number;
+    id: string;
+    _id: string;
+    crown?: Crown;
+    settings: ChannelSettings;
+}
+
 declare class Client extends EventEmitter {
     public uri: string;
     public ws: WebSocket | undefined;
@@ -143,7 +166,43 @@ declare class Client extends EventEmitter {
 declare interface IncomingMPPEvents {
     a: (msg: { m: "a"; a: string; p: Participant; t: number }) => void;
     b: (msg: { m: "b"; code: string }) => void;
+    c: (msg: { m: "c"; c: IncomingMPPEvents["a"][] }) => void;
+    ch: (msg: { m: "ch"; p: string; ch: ChannelInfo }) => void;
+    custom: (msg: { m: "custom"; data: any; p: string }) => void;
+    hi: (msg: {
+        m: "hi";
+        t: number;
+        u: User;
+        permissions: any;
+        token?: any;
+        accountInfo: any;
+    }) => void;
+    ls: (msg: { m: "ls"; c: boolean; u: ChannelInfo[] }) => void;
+    m: (msg: { m: "m"; x: number; y: number; id: string }) => void;
     n: (msg: { m: "n"; t: number; n: Note[]; p: string }) => void;
+    notification: (msg: {
+        duration?: number;
+        class?: string;
+        id?: string;
+        title?: string;
+        text?: string;
+        html?: string;
+        target?: string;
+    }) => void;
+    nq: (msg: {
+        m: "nq";
+        allowance: number;
+        max: number;
+        maxHistLen: number;
+    }) => void;
+    p: (
+        msg: {
+            m: "p";
+            x: number;
+            y: number;
+        } & Participant
+    ) => void;
+    t: (msg: { m: "t"; t: number; e: number }) => void;
 }
 
 declare interface OutgoingMPPEvents {
