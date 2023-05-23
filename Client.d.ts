@@ -127,7 +127,7 @@ declare class Client extends EventEmitter {
 
     public send(raw: string): void;
     public sendArray<Event extends keyof OutgoingMPPEvents>(arr: Event[]): void;
-    public setChannel(id: string, set: ChannelSettings): ChannelSettingValue;
+    public setChannel(id: string, set?: Partial<ChannelSettings>): void;
 
     public offlineChannelSettings: ChannelSettings;
 
