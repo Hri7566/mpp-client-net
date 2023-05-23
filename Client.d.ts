@@ -238,3 +238,5 @@ declare interface OutgoingMPPEvents {
     setcolor: (msg: { m: "setcolor"; color: string; _id: string }) => void;
     setname: (msg: { m: "setname"; name: string; _id: string }) => void;
 }
+
+export { OutgoingMPPEvents, IncomingMPPEvents };
