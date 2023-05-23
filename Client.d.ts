@@ -126,7 +126,9 @@ declare class Client extends EventEmitter {
     protected bindEventListeners(): void;
 
     public send(raw: string): void;
-    public sendArray<Event extends keyof OutgoingMPPEvents>(arr: Event[]): void;
+    public sendArray<Event extends keyof OutgoingMPPEvents>(
+        arr: OutgoingMPPEvents[Event][]
+    ): void;
     public setChannel(id: string, set?: Partial<ChannelSettings>): void;
 
     public offlineChannelSettings: ChannelSettings;
@@ -154,35 +156,35 @@ declare class Client extends EventEmitter {
 
     public on<Event extends keyof IncomingMPPEvents>(
         event: Event,
-        listener: IncomingMPPEvents[Event]
+        listener: (msg: IncomingMPPEvents[Event]) => void
     ): this;
 
     public emit<Event extends keyof IncomingMPPEvents>(
         event: Event,
-        ...args: Parameters<IncomingMPPEvents[Event]>
+        ...args: Parameters<(msg: IncomingMPPEvents[Event]) => void>
     ): boolean;
 }
 
 export default Client;
 
 declare interface IncomingMPPEvents {
-    a: (msg: { m: "a"; a: string; p: Participant; t: number }) => void;
-    b: (msg: { m: "b"; code: string }) => void;
-    c: (msg: { m: "c"; c: IncomingMPPEvents["a"][] }) => void;
-    ch: (msg: { m: "ch"; p: string; ch: ChannelInfo }) => void;
-    custom: (msg: { m: "custom"; data: any; p: string }) => void;
-    hi: (msg: {
+    a: { m: "a"; a: string; p: Participant; t: number };
+    b: { m: "b"; code: string };
+    c: { m: "c"; c: IncomingMPPEvents["a"][] };
+    ch: { m: "ch"; p: string; ch: ChannelInfo };
+    custom: { m: "custom"; data: any; p: string };
+    hi: {
         m: "hi";
         t: number;
         u: User;
         permissions: any;
         token?: any;
         accountInfo: any;
-    }) => void;
-    ls: (msg: { m: "ls"; c: boolean; u: ChannelInfo[] }) => void;
-    m: (msg: { m: "m"; x: number; y: number; id: string }) => void;
-    n: (msg: { m: "n"; t: number; n: Note[]; p: string }) => void;
-    notification: (msg: {
+    };
+    ls: { m: "ls"; c: boolean; u: ChannelInfo[] };
+    m: { m: "m"; x: number; y: number; id: string };
+    n: { m: "n"; t: number; n: Note[]; p: string };
+    notification: {
         duration?: number;
         class?: string;
         id?: string;
@@ -190,53 +192,51 @@ declare interface IncomingMPPEvents {
         text?: string;
         html?: string;
         target?: string;
-    }) => void;
-    nq: (msg: {
+    };
+    nq: {
         m: "nq";
         allowance: number;
         max: number;
         maxHistLen: number;
-    }) => void;
-    p: (
-        msg: {
-            m: "p";
-            x: number;
-            y: number;
-        } & Participant
-    ) => void;
-    t: (msg: { m: "t"; t: number; e: number }) => void;
+    };
+    p: {
+        m: "p";
+        x: number;
+        y: number;
+    } & Participant;
+    t: { m: "t"; t: number; e: number };
 }
 
 declare interface OutgoingMPPEvents {
-    a: (msg: { m: "a"; message: string }) => void;
-    bye: (msg: { m: "bye" }) => void;
-    ch: (msg: { m: "ch"; _id: string; set: ChannelSettings }) => void;
-    chown: (msg: { m: "chown"; id?: string }) => void;
-    chset: (msg: { m: "chset"; set: ChannelSettings }) => void;
-    custom: (msg: { m: "custom"; data: any; target: CustomTarget }) => void;
-    devices: (msg: { m: "devices"; list: any[] }) => void;
-    dm: (msg: { m: "dm"; message: string; _id: string }) => void;
-    hi: (msg: {
+    a: { m: "a"; message: string };
+    bye: { m: "bye" };
+    ch: { m: "ch"; _id: string; set: ChannelSettings };
+    chown: { m: "chown"; id?: string };
+    chset: { m: "chset"; set: ChannelSettings };
+    custom: { m: "custom"; data: any; target: CustomTarget };
+    devices: { m: "devices"; list: any[] };
+    dm: { m: "dm"; message: string; _id: string };
+    hi: {
         m: "hi";
         token?: string;
         login?: { type: string; code: string };
         code?: string;
-    }) => void;
-    kickban: (msg: { m: "kickban"; _id: string; ms: number }) => void;
-    m: (msg: { m: "m"; x?: string | number; y?: string | number }) => void;
-    "-custom": (msg: { m: "-custom" }) => void;
-    "-ls": (msg: { m: "-ls" }) => void;
-    n: (msg: { m: "n"; t: number; n: Note[] }) => void;
-    "+custom": (msg: { m: "+custom" }) => void;
-    "+ls": (msg: { m: "+ls" }) => void;
-    t: (msg: { m: "t"; e: number }) => void;
-    unban: (msg: { m: "unban"; _id: string }) => void;
-    userset: (msg: {
+    };
+    kickban: { m: "kickban"; _id: string; ms: number };
+    m: { m: "m"; x?: string | number; y?: string | number };
+    "-custom": { m: "-custom" };
+    "-ls": { m: "-ls" };
+    n: { m: "n"; t: number; n: Note[] };
+    "+custom": { m: "+custom" };
+    "+ls": { m: "+ls" };
+    t: { m: "t"; e: number };
+    unban: { m: "unban"; _id: string };
+    userset: {
         m: "userset";
         set: { name?: string; color?: string };
-    }) => void;
-    setcolor: (msg: { m: "setcolor"; color: string; _id: string }) => void;
-    setname: (msg: { m: "setname"; name: string; _id: string }) => void;
+    };
+    setcolor: { m: "setcolor"; color: string; _id: string };
+    setname: { m: "setname"; name: string; _id: string };
 }
 
 export { OutgoingMPPEvents, IncomingMPPEvents };
