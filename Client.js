@@ -62,7 +62,7 @@ class Client extends EventEmitter {
         if(typeof module !== "undefined") {
             // nodejsicle
             this.ws = new WebSocket(this.uri, {
-                origin: "https://www.multiplayerpiano.com"
+                origin: "https://multiplayerpiano.net"
             });
         } else {
             // browseroni
