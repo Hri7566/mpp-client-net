@@ -1,6 +1,6 @@
 {
     "name": "mpp-client-net",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Client for multiplayerpiano.net",
     "main": "build/index.js",
     "scripts": {
