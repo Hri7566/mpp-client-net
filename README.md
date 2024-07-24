@@ -13,21 +13,26 @@ It is strongly recommended that you keep your tokens in a safe place where nobod
 MPPNET_TOKEN=your token here
 ```
 
-```js
-// index.js
+```ts
+// index.ts
 
 // Load environment variables into process.env
-require('dotenv').config();
+import { configDotenv } from "dotenv";
+configDotenv();
 
-const Client = require('mpp-client-net');
-let cl = new Client("wss://mppclone.com", process.env.MPPNET_TOKEN);
+import { Client } from "mpp-client-net";
 
-cl.start();
-cl.setChannel('test/awkward');
+// Instnatiate a new client
+const client = new Client("wss://mppclone.com", process.env.MPPNET_TOKEN);
 
-cl.on('a', msg => {
+client.start();
+client.setChannel('test/awkward');
+
+// Listen for chat messages
+client.on('a', msg => {
     if (msg.a == "!ping") {
-        cl.sendArray([{
+        // Send a chat message back
+        client.sendArray([{
             m: "a",
             message: "Pong!"
         }]);
