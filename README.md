@@ -1,12 +1,15 @@
 # mpp-client-net
 
-This module is a fork of the [MPP client](https://github.com/multiplayerpiano/mpp-frontend-v1) with token-based authentication. This module is only meant for [MPP.net](https://multiplayerpiano.net), but it will work on any MPP site that uses token-based authentication in the same way as MPP.net.
+This module is a fork of the [MPP.net client](https://github.com/mppnet/frontend). This module is only meant for [MPP.net](https://multiplayerpiano.net), but it will likely work on any MPP site that uses token-based authentication in the same way as MPP.net.
 
-This module is not officially affiliated with MPP.net.
+As of recently, this module is now the official MPP.net client.
 
 ## Usage
 
-It is strongly recommended that you keep your tokens in a safe place where nobody else can access them.
+It is strongly recommended that you keep your bot tokens in a safe place where nobody else can access them.
+Personally, I keep mine in a `.env` file in the root of my project, as that is a typical place for project secrets.
+
+For more information on what messages to send to the server, see the [MPP.net Protocol Documentation](https://github.com/mppnet/frontend/blob/main/docs/protocol.md).
 
 ```env
 # .env
