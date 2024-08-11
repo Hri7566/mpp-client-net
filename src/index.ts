@@ -468,6 +468,63 @@ export class Client extends EventEmitter {
             return false;
         }
     }
+
+    public sendChat(message: string) {
+        this.sendArray([{
+            m: "a",
+            message
+        }]);
+    }
+
+    public chown(id?: Participant["id"]) {
+        this.sendArray([{
+            m: "chown",
+            id: id
+        }]);
+    }
+
+    public setName(name: string) {
+        this.sendArray([{
+            m: "userset",
+            set: {
+                name
+            }
+        }]);
+    }
+
+    public setColor(color: string) {
+        this.sendArray([{
+            m: "userset",
+            set: {
+                color
+            }
+        }]);
+    }
+
+    public userset(set: Partial<{ name: string, color: string }>) {
+        this.sendArray([{
+            m: "userset",
+            set
+        }]);
+    }
+
+    public setCursor(x: number | string, y: number | string) {
+        if (typeof x === "number") x = x.toFixed(2);
+        if (typeof y === "number") y = y.toFixed(2);
+
+        this.sendArray([{
+            m: "m",
+            x,
+            y
+        }]);
+    }
+
+    public chset(set: Partial<ChannelSettings>) {
+        this.sendArray([{
+            m: "chset",
+            set
+        }]);
+    }
 }
 
 export default Client;
