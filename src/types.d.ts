@@ -1,16 +1,16 @@
-declare interface Tag {
+export declare interface Tag {
     text: string;
     color: string;
 }
 
-declare interface User {
+export declare interface User {
     _id: string; // user id
     name: string;
     color: string;
     tag?: Tag;
 }
 
-declare interface Participant extends User {
+export declare interface Participant extends User {
     id: string; // participant id (same as user id on mpp.net)
     afk: boolean;
     vanished?: boolean;
@@ -18,7 +18,7 @@ declare interface Participant extends User {
     y: number | string;
 }
 
-declare type ChannelSettings = {
+export declare type ChannelSettings = {
     [key: string]: boolean | number | string;
     color: string;
     crownsolo: boolean;
@@ -32,9 +32,10 @@ declare type ChannelSettings = {
     "lyrical notes": boolean;
     "no cussing": boolean;
     noindex: boolean;
+    minOnlineTime: number;
 }>;
 
-declare interface ChannelInfo {
+export declare interface ChannelInfo {
     banned?: boolean;
     count: number;
     id: string;
@@ -43,31 +44,31 @@ declare interface ChannelInfo {
     settings: ChannelSettings;
 }
 
-declare type NoteLetter = `a` | `b` | `c` | `d` | `e` | `f` | `g`;
-declare type NoteOctave = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+export declare type NoteLetter = `a` | `b` | `c` | `d` | `e` | `f` | `g`;
+export declare type NoteOctave = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-declare interface Note {
+export declare interface Note {
     n: `${NoteLetter}${NoteOctave}`;
     d?: number;
     v?: number;
     s?: 1;
 }
 
-declare type LoginType = "discord";
+export declare type LoginType = "discord";
 
-declare interface LoginInfo {
+export declare interface LoginInfo {
     type: LoginType;
     code: string;
 }
 
-declare interface AccountInfo {
+export declare interface AccountInfo {
     type: LoginType;
     username: string;
     discriminator: string;
     avatar: string;
 }
 
-declare interface IncomingEvents {
+export declare interface IncomingEvents {
     a: {
         m: "a";
         a: string;
@@ -124,6 +125,7 @@ declare interface IncomingEvents {
         permissions: any;
         token?: any;
         accountInfo: any;
+        motd?: string;
     };
 
     ls: {
@@ -176,7 +178,7 @@ declare interface IncomingEvents {
     };
 }
 
-declare interface OutgoingEvents {
+export declare interface OutgoingEvents {
     a: {
         m: "a";
         message: string;
@@ -200,7 +202,7 @@ declare interface OutgoingEvents {
 
     chset: {
         m: "chset";
-        set: Partial<ChannelSettings>;
+        set: Partial<ChannelSettings & { limit: number | string }>;
     };
 
     custom: {
@@ -223,6 +225,7 @@ declare interface OutgoingEvents {
     hi: {
         m: "hi";
         token?: string;
+        code?: string;
         login?: LoginInfo;
     };
 
@@ -288,7 +291,7 @@ declare interface OutgoingEvents {
     };
 }
 
-declare interface LocalEvents {
+export declare interface LocalEvents {
     count: number;
     "participant added": Participant;
     "participant removed": Participant;
@@ -299,4 +302,4 @@ declare interface LocalEvents {
     connect: any;
 }
 
-declare type EmittableEvents = LocalEvents & IncomingEvents;
+export declare type EmittableEvents = LocalEvents & IncomingEvents;

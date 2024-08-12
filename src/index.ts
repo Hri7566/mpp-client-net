@@ -1,5 +1,22 @@
 import { EventEmitter } from "events";
 import { WebSocket } from "ws";
+import {
+    ChannelInfo,
+    Participant,
+    User,
+    LoginInfo,
+    AccountInfo,
+    Note,
+    ChannelSettings,
+    EmittableEvents,
+    IncomingEvents,
+    OutgoingEvents,
+    LocalEvents,
+    LoginType,
+    NoteLetter,
+    NoteOctave,
+    Tag
+} from "./types";
 
 export class Client extends EventEmitter {
     public ws: WebSocket | undefined;
@@ -528,3 +545,21 @@ export class Client extends EventEmitter {
 }
 
 export default Client;
+
+export {
+    ChannelInfo,
+    Participant,
+    User,
+    LoginInfo,
+    AccountInfo,
+    Note,
+    ChannelSettings,
+    EmittableEvents,
+    IncomingEvents,
+    OutgoingEvents,
+    LocalEvents,
+    LoginType,
+    NoteLetter,
+    NoteOctave,
+    Tag
+};

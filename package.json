@@ -1,7 +1,7 @@
 {
     "name": "mpp-client-net",
-    "version": "1.2.2",
-    "description": "Client for multiplayerpiano.net",
+    "version": "1.2.3",
+    "description": "Client for MultiplayerPiano.net",
     "main": "build/index.js",
     "scripts": {
         "build": "npx tsc",
