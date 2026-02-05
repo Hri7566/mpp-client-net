@@ -1,16 +1,16 @@
-export declare interface Tag {
+export interface Tag {
     text: string;
     color: string;
 }
 
-export declare interface User {
+export interface User {
     _id: string; // user id
     name: string;
     color: string;
     tag?: Tag;
 }
 
-export declare interface Participant extends User {
+export interface Participant extends User {
     id: string; // participant id (same as user id on mpp.net)
     afk: boolean;
     vanished?: boolean;
@@ -18,7 +18,7 @@ export declare interface Participant extends User {
     y: number | string;
 }
 
-export declare type ChannelSettings = {
+export type ChannelSettings = {
     [key: string]: boolean | number | string;
     color: string;
     crownsolo: boolean;
@@ -35,7 +35,20 @@ export declare type ChannelSettings = {
     minOnlineTime: number;
 }>;
 
-export declare interface ChannelInfo {
+export interface Vector2 {
+    x: string | number;
+    y: string | number;
+}
+
+export interface Crown {
+    participantId?: string;
+    userId?: string;
+
+    startPos: Vector2;
+    endPos: Vector2;
+}
+
+export interface ChannelInfo {
     banned?: boolean;
     count: number;
     id: string;
@@ -44,31 +57,31 @@ export declare interface ChannelInfo {
     settings: ChannelSettings;
 }
 
-export declare type NoteLetter = `a` | `b` | `c` | `d` | `e` | `f` | `g`;
-export declare type NoteOctave = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+export type NoteLetter = `a` | `b` | `c` | `d` | `e` | `f` | `g`;
+export type NoteOctave = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-export declare interface Note {
+export interface Note {
     n: `${NoteLetter}${NoteOctave}`;
     d?: number;
     v?: number;
     s?: 1;
 }
 
-export declare type LoginType = "discord";
+export type LoginType = "discord";
 
-export declare interface LoginInfo {
+export interface LoginInfo {
     type: LoginType;
     code: string;
 }
 
-export declare interface AccountInfo {
+export interface AccountInfo {
     type: LoginType;
     username: string;
     discriminator: string;
     avatar: string;
 }
 
-export declare interface IncomingEvents {
+export interface IncomingEvents {
     a: {
         m: "a";
         a: string;
@@ -178,7 +191,7 @@ export declare interface IncomingEvents {
     };
 }
 
-export declare interface OutgoingEvents {
+export interface OutgoingEvents {
     a: {
         m: "a";
         message: string;
@@ -208,7 +221,17 @@ export declare interface OutgoingEvents {
     custom: {
         m: "custom";
         data: any;
-        target: CustomTarget;
+        target: ({
+            mode: "id";
+            id: string;
+        } | {
+            mode: "ids";
+            ids: string[];
+        } | {
+            mode: "subscribed"
+        }) & {
+            global?: boolean;
+        };
     };
 
     devices: {
@@ -291,7 +314,7 @@ export declare interface OutgoingEvents {
     };
 }
 
-export declare interface LocalEvents {
+export interface LocalEvents {
     count: number;
     "participant added": Participant;
     "participant removed": Participant;
@@ -302,4 +325,4 @@ export declare interface LocalEvents {
     connect: any;
 }
 
-export declare type EmittableEvents = LocalEvents & IncomingEvents;
+export type EmittableEvents = LocalEvents & IncomingEvents;
