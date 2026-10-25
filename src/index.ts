@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { WebSocket } from "ws";
-import {
+import type {
     ChannelInfo,
     Participant,
     User,
@@ -165,13 +165,25 @@ export class Client extends EventEmitter {
         });
 
         this.ws.addEventListener("message", async evt => {
-            const transmission = JSON.parse(
-                (evt as unknown as { data: string }).data
-            );
+            let transmission;
 
-            for (let i = 0; i < transmission.length; i++) {
-                const msg = transmission[i];
-                this.emit(msg.m, msg);
+            try {
+                transmission = JSON.parse(
+                    (evt as unknown as { data: string }).data
+                );
+            } catch (err) {
+                this.emit("wserror", err);
+            }
+
+            if (!Array.isArray(transmission)) return;
+
+            try {
+                for (let i = 0; i < transmission.length; i++) {
+                    const msg = transmission[i];
+                    this.emit(msg.m, msg);
+                }
+            } catch (err) {
+                this.emit("wserror", err);
             }
         });
     }
